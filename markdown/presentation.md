@@ -8,7 +8,7 @@
 
 ---
 
-# Installing Phoenix 
+# Step 1 Installing Phoenix 
 
 make sure you have elixir up to date installed we also need hex so type 
 ``` mix local.hex ``` into your command line.
@@ -57,6 +57,8 @@ and you will see the Welcome to Phoenix default page! this is your first Phoenix
 
 ---
 
+## Step 2 Creating a blog
+
 Now the objective of this tutorial will be to create a simple personal blogging website with user authentication to only allow certain people to post.
 
 to exit out of our running phoenix app hit control c in the terminal twice then cd .. out of the hello directory 
@@ -65,9 +67,11 @@ we will call our new application blog so start the project with ```mix phx.new b
 
 ---
 
-now cd into blog and type mix ecto.create to make our database the next thing we will do is to use phoenix to generate a posts page for us to allow us to quickly add and view posts
+## Step 3 generating post pages
 
-type ``` mix phx.gen.html Pages Post posts title:string body:text ``` what this command does is generate files for a new page called posts and sets up the database with the schemea of creating posts with the attributes title which holds a string value and a body which will hold text
+now cd into blog and type ```mix ecto.create``` to make our database. Next we will generate pages using ```phx.gen.html``` to easily make a posts page
+
+type ``` mix phx.gen.html Pages Post posts title:string body:text ``` what this command does is generate files for a new page called posts and sets up the database with Posts attributes title which holds a string value and a body which will hold text
 
 
 ----
@@ -102,8 +106,13 @@ which allows us to enter a post with a title and a body and just like that we ha
 
 ---
 
+## Step 4 User Authentication
+
 now lets create our user authentication we are going to generate more files using phx.gen so lets create users schema using the command 
 ``` mix phx.gen.html Accounts User users username:string:unique encrypted_password:string ```
+
+
+---
 
 add the path to your router and now your router.ex should look like this
 
@@ -132,7 +141,10 @@ lib/blog_web/templates/user/form.html.eex and we will edit the password labels t
 
 This now masks our input and will label the form with the name password rather than encrypted_password
 
-now open app.html.eex under lib/blog_web/templates/layout/app.html.eex and find the header tag and delete everything in there we can replace the header with a link to sign up as a user with the line 
+now open app.html.eex under ```lib/blog_web/templates/layout/app.html.eex ``` find the header tag and delete everything in there so we can put a link to sign up as a user
+
+---
+
 
 ```elixir
 <%= link "Sign up", to: Routes.user_path(@conn, :new) %>
@@ -140,9 +152,9 @@ now open app.html.eex under lib/blog_web/templates/layout/app.html.eex and find 
 
 this now gives us a link to sign up from anywhere on the website
 
----
-
 you can check this by running the server with mix phx.server and clicking the Sign up link
+
+---
 
 Now we need to include two modules to authenticate our accountswe need the comeonin library so we can encrypt our passwords and we also need to use the bcrypt library to actually hash our passwords
 
@@ -156,7 +168,7 @@ open your file mix.exs and look where your dependencies are and add the followin
 ---
 
 Now we will fetch our library's with the command mix deps.get
-now uwe will open our user.ex file under lib/blog/accounts/user.ex  and update our changeset function with Bcrypt.hash_pwd_salt/1
+now uwe will open our user.ex file under ```lib/blog/accounts/user.ex```  and update our changeset function with ```Bcrypt.hash_pwd_salt/1```
 
 ```elixir 
 def changeset(user, attrs) do
@@ -174,7 +186,7 @@ def changeset(user, attrs) do
 Now once a user signs up the password will be encrypted
 to know which user is signed in we should set our session once someone is registered. 
 
-open our user_controller.ex file under lib/blog_web/controllers/user_controller.ex and set session id as ```:current_user_id``` under the create function and change the route to redirect to the post page
+open our user_controller.ex file under ```lib/blog_web/controllers/user_controller.ex``` and set session id as ```:current_user_id``` under the create function and change the route to redirect to the post page
 
 ---
 
