@@ -13,7 +13,7 @@
 make sure you have elixir up to date installed we also need hex so type 
 ``` mix local.hex ``` into your command line.
 
-once installed type ``` mix archiive.install hex phx_new 1.5.4```
+once installed type ``` mix archive.install hex phx_new 1.5.4```
 
 It is recommended to install node.js from either 
 https://nodejs.org/en/download/ or by installing with brew using ``` brew install node ```
