@@ -425,7 +425,7 @@ and our function will look like
 
 ```elixir
 defp check_auth(conn, _args) do
-    if (user_id = get_session(conn, :current_user_id)) && Accounts.get_username(user_id) == "david" do
+    if (user_id = get_session(conn, :current_user_id)) && Accounts.get_username(user_id) == "user" do
       current_user = Accounts.get_user!(user_id)
 
       conn
@@ -450,7 +450,7 @@ Now In my program I will only allow users with the username = "david" to edit bl
       <td><%= post.body %></td>
 
       <td>
-      <%= if (user_id = Plug.Conn.get_session(@conn, :current_user_id)) && Blog.Accounts.get_username(user_id) == "david" do %>
+      <%= if (user_id = Plug.Conn.get_session(@conn, :current_user_id)) && Blog.Accounts.get_username(user_id) == "user" do %>
         <span><%= link "Show", to: Routes.post_path(@conn, :show, post) %></span>
         <span><%= link "Edit", to: Routes.post_path(@conn, :edit, post) %></span>
         <span><%= link "Delete", to: Routes.post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"] %></span>
@@ -461,7 +461,7 @@ Now In my program I will only allow users with the username = "david" to edit bl
   </tbody>
 </table>
 
-<%= if (user_id = Plug.Conn.get_session(@conn, :current_user_id)) && Blog.Accounts.get_username(user_id) == "david" do %>
+<%= if (user_id = Plug.Conn.get_session(@conn, :current_user_id)) && Blog.Accounts.get_username(user_id) == "user" do %>
   <span><%= link "New Post", to: Routes.post_path(@conn, :new) %></span>
 <% end %>
 
