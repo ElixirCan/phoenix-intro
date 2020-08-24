@@ -64,7 +64,7 @@ defmodule BlogWeb.PostController do
   end
 
   defp check_auth(conn, _args) do
-    if (user_id = get_session(conn, :current_user_id)) && Accounts.get_username(user_id) == "david" do
+    if (user_id = get_session(conn, :current_user_id))do
       current_user = Accounts.get_user!(user_id)
 
       conn
